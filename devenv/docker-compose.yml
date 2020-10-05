@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  mysql:
+    container_name: cooking-shopping-api-mysql
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: test-password
+      MYSQL_DATABASE: cooking_shopping_db
+    volumes:
+      - dbdata:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  dbdata:
