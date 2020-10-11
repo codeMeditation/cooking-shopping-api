@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { IngredientEntity } from './Ingredients/ingredient.entity';
+import { Ingredient } from './Ingredients/ingredient.entity';
 import { IngredientModule } from './Ingredients/ingredient.module';
-import { RecipeEntity } from './recipe/recipe.entity';
+import { Recipe } from './recipe/recipe.entity';
 import { RecipeModule } from './recipe/recipe.module';
 
 @Module({
@@ -21,7 +21,7 @@ import { RecipeModule } from './recipe/recipe.module';
         username: configService.get<string>('MYSQL_DATABASE_USERNAME'),
         password: configService.get<string>('MYSQL_DATABASE_PASSWORD'),
         database: configService.get<string>('MYSQL_DATABASE_NAME'),
-        entities: [ IngredientEntity, RecipeEntity ],
+        entities: [ Ingredient, Recipe ],
         synchronize: true,
       }),
     }),

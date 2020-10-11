@@ -1,5 +1,5 @@
 import {
-  IsString, IsNumber, IsPositive, IsNotEmpty, IsOptional
+  IsString, IsNotEmpty, IsOptional
 } from 'class-validator';
 
 export class IngredientCreateUpdateDto {
@@ -9,28 +9,9 @@ export class IngredientCreateUpdateDto {
 
   @IsString()
   @IsOptional()
-  public source?: string;
-
+  public text?: string;
+  
   @IsString()
   @IsOptional()
-  public brand?: string;
-
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @IsOptional()
-  public price?: number;
-
-  @IsNumber()
-  @IsPositive()
-  @IsOptional()
-  public orderQty?: number;
-
-  @IsNumber()
-  @IsPositive()
-  @IsOptional()
-  public minimumStock?: number;
-
-  @IsNumber()
-  @IsPositive()
-  @IsOptional()
-  public actualStock?: number;
+  public brand?: string;  
 }
