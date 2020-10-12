@@ -5,6 +5,8 @@ import { Ingredient } from './Ingredients/ingredient.entity';
 import { IngredientModule } from './Ingredients/ingredient.module';
 import { Recipe } from './recipe/recipe.entity';
 import { RecipeModule } from './recipe/recipe.module';
+import { Shop } from './shop/shop.entity';
+import { ShopModule } from './shop/shop.module';
 
 @Module({
   imports: [
@@ -21,12 +23,13 @@ import { RecipeModule } from './recipe/recipe.module';
         username: configService.get<string>('MYSQL_DATABASE_USERNAME'),
         password: configService.get<string>('MYSQL_DATABASE_PASSWORD'),
         database: configService.get<string>('MYSQL_DATABASE_NAME'),
-        entities: [ Ingredient, Recipe ],
+        entities: [ Ingredient, Recipe, Shop ],
         synchronize: true,
       }),
     }),
     IngredientModule,
     RecipeModule,
+    ShopModule,
   ],
 })
 export class AppModule {}

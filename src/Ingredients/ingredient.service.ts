@@ -2,7 +2,7 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { FindManyOptions, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Ingredient } from './ingredient.entity';
-import { IngredientCreateUpdateDto } from './dto/ingredientCreateUpdateDto';
+import { IngredientCreateUpdateDto } from './dto/ingredient-create-update.dto';
 import { UserSearchQuery } from './dto/user-search-query';
 
 @Injectable()
@@ -31,7 +31,7 @@ export class IngredientService {
   public async findById(id: string): Promise<Ingredient> {
     const searchResult = await this.repository.findOne(id);
     if (searchResult === undefined) {
-      throw new NotFoundException(`Ingredients with ID ${id} cannot be found`);
+      throw new NotFoundException(`Ingredient with ID ${id} cannot be found`);
     }
     return searchResult;
   }
@@ -45,7 +45,7 @@ export class IngredientService {
       });
     } catch (error) {
       if (error.message.includes('ER_DUP_ENTRY')) {
-        throw new ConflictException(`Ingredients with name ${ingredient.name} already exists`);
+        throw new ConflictException(`Ingredient with name ${ingredient.name} already exists`);
       }
       throw error;
     }
@@ -75,7 +75,7 @@ export class IngredientService {
   public async delete(id: string): Promise<void> {
     const deleteResult = await this.repository.delete(id);
     if (deleteResult.affected === 0) {
-      throw new NotFoundException(`Ingredients with ID ${id} cannot be found`);
+      throw new NotFoundException(`Ingredient with ID ${id} cannot be found`);
     }
     await this.repository.delete(id);
   }

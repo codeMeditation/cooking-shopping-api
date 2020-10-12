@@ -13,11 +13,11 @@ export class RecipeController {
   @Get()
   @HttpCode(HttpStatus.OK)
   public async findAll(@Query() query: UserSearchQuery) {
-    const reviewSearchQuery = {
+    const recipeSearchQuery = {
       name: query.name,
     };
 
-    return await this.service.search(reviewSearchQuery);
+    return await this.service.search(recipeSearchQuery);
   }
 
   @Get(':id')

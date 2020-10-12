@@ -1,7 +1,7 @@
 import {
   Controller, Post, HttpCode, HttpStatus, Body, Delete, Param, Get, Query, Put
 } from '@nestjs/common';
-import { IngredientCreateUpdateDto } from './dto/ingredientCreateUpdateDto';
+import { IngredientCreateUpdateDto } from './dto/ingredient-create-update.dto';
 import { UserSearchQuery } from './dto/user-search-query';
 import { Ingredient } from './ingredient.entity';
 import { IngredientService } from './ingredient.service';
