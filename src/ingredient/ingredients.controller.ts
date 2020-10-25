@@ -3,7 +3,7 @@ import {
 } from '@nestjs/common';
 import { IngredientCreateUpdateDto } from './dto/ingredient-create-update.dto';
 import { UserSearchQuery } from './dto/user-search-query';
-import { Ingredient } from './ingredient.entity';
+import { IngredientEntity } from './ingredient.entity';
 import { IngredientService } from './ingredient.service';
 
 @Controller('/api/cookingAndShopping/ingredients')
@@ -14,28 +14,27 @@ export class IngredientController {
   @HttpCode(HttpStatus.OK)
   public async findAll(@Query() query: UserSearchQuery) {
     const ingredientSearchQuery = {
-      name: query.name,      
-      brand: query.brand
+      name: query.name,
     };
 
     return await this.service.search(ingredientSearchQuery);
   }
 
-  @Get(':id')
+  @Get(':name')
   @HttpCode(HttpStatus.OK)
-  public findById(@Param('id') id: string): Promise<Ingredient> {
-    return this.service.findById(id);
+  public findById(@Param('name') name: string): Promise<IngredientEntity> {
+    return this.service.findById(name);
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  public create(@Body() ingredient: IngredientCreateUpdateDto): Promise<Ingredient> {
+  public create(@Body() ingredient: IngredientCreateUpdateDto): Promise<IngredientEntity> {
     return this.service.create(ingredient);
   }
 
   @Put(':id')
   @HttpCode(HttpStatus.ACCEPTED)
-  public update(@Param('id') id: string, @Body() ingredient: IngredientCreateUpdateDto): Promise<Ingredient> {
+  public update(@Param('id') id: string, @Body() ingredient: IngredientCreateUpdateDto): Promise<IngredientEntity> {
     return this.service.update(id, ingredient);
   }
 

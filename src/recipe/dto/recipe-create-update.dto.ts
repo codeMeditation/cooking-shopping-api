@@ -1,21 +1,10 @@
-import {
-  IsString, IsNotEmpty, ArrayUnique, IsUUID, IsOptional
-} from 'class-validator';
+import { IsString, IsNotEmpty, ArrayUnique } from 'class-validator';
 
 export class RecipeCreateUpdateDto {
   @IsString()
   @IsNotEmpty()
   public name: string;
 
-  @IsString()
-  @IsOptional()
-  public title?: string;
-
-  @IsString()
-  @IsOptional()
-  public text?: string;
-
   @ArrayUnique()
-  @IsUUID(4, { each: true })
-  public ingredientIds: string[]; 
+  public ingredientAmount: string[];
 }

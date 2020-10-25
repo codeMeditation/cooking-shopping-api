@@ -1,19 +1,19 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Recipe } from './recipe.entity';
+import { RecipeEntity } from './recipe.entity';
 import { RecipeCreateUpdateDto } from './dto/recipe-create-update.dto';
 import { FindManyOptions, Repository } from 'typeorm';
-import { UserSearchQuery } from '../Ingredients/dto/user-search-query';
+import { UserSearchQuery } from './dto/user-search-query';
 
 @Injectable()
 export class RecipeService {
   public constructor(
-    @InjectRepository(Recipe)
-    private readonly repository: Repository<Recipe>,
+    @InjectRepository(RecipeEntity)
+    private readonly repository: Repository<RecipeEntity>,
   ) { }
 
   public async search(userSearchQuery: UserSearchQuery) {
-    const dbQuery: FindManyOptions<Recipe> = {};
+    const dbQuery: FindManyOptions<RecipeEntity> = { relations: ['ingredientAmount', 'ingredientAmount.ingredient'] };
 
     dbQuery['where'] = {};
 
@@ -24,21 +24,19 @@ export class RecipeService {
     return await this.repository.findAndCount(dbQuery);
   }
 
-  public async findById(id: string): Promise<Recipe> {
-    const searchResult = await this.repository.findOne(id, { relations: ['ingredients'] });
+  public async findById(id: string): Promise<RecipeEntity> {
+    const searchResult = await this.repository.findOne(id, { relations: ['ingredientAmount', 'ingredientAmount.ingredient'] });
     if (searchResult === undefined) {
       throw new NotFoundException(`Recipe with ID ${id} cannot be found`);
     }
     return searchResult;
   }
 
-  public async create(recipe: RecipeCreateUpdateDto): Promise<Recipe> {
+  public async create(recipe: RecipeCreateUpdateDto): Promise<RecipeEntity> {
     try {
       return await this.repository.save({
         name: recipe.name,
-        title: recipe.title || '',
-        text: recipe.text || '',
-        ingredients: recipe.ingredientIds.map((id) => ({ id })),
+        ingredientAmount: recipe.ingredientAmount.map((id) => ({ id })),
       });
     } catch (error) {
       if (error.message.includes('ER_DUP_ENTRY')) {
@@ -48,7 +46,7 @@ export class RecipeService {
     }
   }
 
-  public async update(id: string, recipe: RecipeCreateUpdateDto): Promise<Recipe> {
+  public async update(id: string, recipe: RecipeCreateUpdateDto): Promise<RecipeEntity> {
     const exisitngRecipe = await this.repository.findOne(id, { select: ['id'] });
     if (exisitngRecipe === undefined) {
       throw new NotFoundException(`Recipe with ID ${id} cannot be found`);
@@ -58,9 +56,7 @@ export class RecipeService {
       return await this.repository.save({
         id,
         name: recipe.name,
-        title: recipe.title || '',
-        text: recipe.text || '',
-        ingredients: recipe.ingredientIds.map((id) => ({ id })),
+        ingredientAmount: recipe.ingredientAmount.map((id) => ({ id })),
       });
     } catch (error) {
       if (error.message.includes('ER_DUP_ENTRY')) {

@@ -1,9 +1,9 @@
 import {
   Controller, Post, HttpCode, HttpStatus, Body, Param, Get, Query, Delete, Put
 } from '@nestjs/common';
-import { UserSearchQuery } from '../Ingredients/dto/user-search-query';
 import { RecipeCreateUpdateDto } from './dto/recipe-create-update.dto';
-import { Recipe } from './recipe.entity';
+import { UserSearchQuery } from './dto/user-search-query';
+import { RecipeEntity } from './recipe.entity';
 import { RecipeService } from './recipe.service';
 
 @Controller('/api/cookingAndShopping/recipes')
@@ -22,19 +22,19 @@ export class RecipeController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  public findById(@Param('id') id: string): Promise<Recipe> {
+  public findById(@Param('id') id: string): Promise<RecipeEntity> {
     return this.service.findById(id);
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  public create(@Body() ingredient: RecipeCreateUpdateDto): Promise<Recipe> {
+  public create(@Body() ingredient: RecipeCreateUpdateDto): Promise<RecipeEntity> {
     return this.service.create(ingredient);
   }
 
   @Put(':id')
   @HttpCode(HttpStatus.ACCEPTED)
-  public update(@Param('id') id: string, @Body() recipe: RecipeCreateUpdateDto): Promise<Recipe> {
+  public update(@Param('id') id: string, @Body() recipe: RecipeCreateUpdateDto): Promise<RecipeEntity> {
     return this.service.update(id, recipe);
   }
 

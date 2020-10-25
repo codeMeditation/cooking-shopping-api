@@ -1,8 +1,8 @@
-import { Ingredient } from '../Ingredients/ingredient.entity';
-import { Entity, PrimaryGeneratedColumn, Column, Index, JoinTable, ManyToMany } from 'typeorm';
+import { IngredientAmountEntity } from 'src/ingredient-amount/ingredient-amount.entity';
+import { Entity, Column, Index, PrimaryGeneratedColumn, JoinTable, ManyToMany } from 'typeorm';
 
 @Entity({ name: 'recipes' })
-export class Recipe {
+export class RecipeEntity {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
@@ -10,13 +10,7 @@ export class Recipe {
   @Column({ type: 'varchar', length: 50 })
   public name: string;
 
-  @Column({ type: 'varchar', length: 150 })
-  public title?: string;
-
-  @Column()
-  public text?: string;
-
-  @ManyToMany(() => Ingredient)
-  @JoinTable({ name: 'recipe_ingredient_relations' })
-  ingredients: Ingredient[];
+  @ManyToMany(() => IngredientAmountEntity)
+  @JoinTable({ name: 'recipe_ingredientAmount_relations' })
+  public ingredientAmount: IngredientAmountEntity[];
 }
