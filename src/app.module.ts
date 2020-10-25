@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Ingredient } from './Ingredients/ingredient.entity';
-import { IngredientModule } from './Ingredients/ingredient.module';
-import { Recipe } from './recipe/recipe.entity';
+import { IngredientAmountEntity } from './ingredient-amount/ingredient-amount.entity';
+import { IngredientAmountModule } from './ingredient-amount/ingredient-amount.module';
+import { IngredientEntity } from './ingredient/ingredient.entity';
+import { IngredientModule } from './ingredient/ingredient.module';
+import { RecipeEntity } from './recipe/recipe.entity';
 import { RecipeModule } from './recipe/recipe.module';
-import { Shop } from './shop/shop.entity';
-import { ShopModule } from './shop/shop.module';
 
 @Module({
   imports: [
@@ -15,7 +15,7 @@ import { ShopModule } from './shop/shop.module';
       envFilePath: `env/${process.env.NODE_ENV}.env`,
     }),
     TypeOrmModule.forRootAsync({
-      inject: [ ConfigService ],
+      inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'mysql',
         host: configService.get<string>('MYSQL_DATABASE_HOST'),
@@ -23,13 +23,13 @@ import { ShopModule } from './shop/shop.module';
         username: configService.get<string>('MYSQL_DATABASE_USERNAME'),
         password: configService.get<string>('MYSQL_DATABASE_PASSWORD'),
         database: configService.get<string>('MYSQL_DATABASE_NAME'),
-        entities: [ Ingredient, Recipe, Shop ],
+        entities: [IngredientEntity, IngredientAmountEntity, RecipeEntity],
         synchronize: true,
       }),
     }),
     IngredientModule,
+    IngredientAmountModule,
     RecipeModule,
-    ShopModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }
