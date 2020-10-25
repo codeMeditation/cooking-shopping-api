@@ -13,7 +13,7 @@ export class IngredientAmountService {
   ) { }
 
   public async search(userSearchQuery: UserSearchQuery) {
-    const dbQuery: FindManyOptions<IngredientAmountEntity> = { relations: ['ingredient'] };
+    const dbQuery: FindManyOptions<IngredientAmountEntity> = { relations: [ 'ingredient' ] };
 
     dbQuery['where'] = {};
 
@@ -25,7 +25,7 @@ export class IngredientAmountService {
   }
 
   public async findById(id: string): Promise<IngredientAmountEntity> {
-    const searchResult = await this.repository.findOne(id, { relations: ['ingredient'] });
+    const searchResult = await this.repository.findOne(id, { relations: [ 'ingredient' ] });
     if (searchResult === undefined) {
       throw new NotFoundException(`IngredientAmount with ID ${id} cannot be found`);
     }
@@ -40,7 +40,7 @@ export class IngredientAmountService {
   }
 
   public async update(id: string, ingredientAmount: IngredientAmountCreateUpdateDto): Promise<IngredientAmountEntity> {
-    const exisitngIngredientAmount = await this.repository.findOne(id, { select: ['id'] });
+    const exisitngIngredientAmount = await this.repository.findOne(id, { select: [ 'id' ] });
     if (exisitngIngredientAmount === undefined) {
       throw new NotFoundException(`IngredientAmount with ID ${id} cannot be found`);
     }
@@ -54,7 +54,7 @@ export class IngredientAmountService {
   public async delete(id: string): Promise<void> {
     const deleteResult = await this.repository.delete(id);
     if (deleteResult.affected === 0) {
-      throw new NotFoundException(`Ingredient with ID ${id} cannot be found`);
+      throw new NotFoundException(`IngredientAmount with ID ${id} cannot be found`);
     }
     await this.repository.delete(id);
   }

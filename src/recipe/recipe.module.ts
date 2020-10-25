@@ -5,9 +5,9 @@ import { RecipeEntity } from './recipe.entity';
 import { RecipeService } from './recipe.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([RecipeEntity])],
-  providers: [RecipeService],
-  controllers: [RecipeController],
-  exports: [RecipeService],
+  imports: [ TypeOrmModule.forFeature([ RecipeEntity ]) ],
+  providers: [ RecipeService ],
+  controllers: [ RecipeController ],
+  exports: [ RecipeService ],
 })
 export class RecipeModule { }

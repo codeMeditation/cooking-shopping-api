@@ -13,7 +13,7 @@ export class RecipeService {
   ) { }
 
   public async search(userSearchQuery: UserSearchQuery) {
-    const dbQuery: FindManyOptions<RecipeEntity> = { relations: ['ingredientAmount', 'ingredientAmount.ingredient'] };
+    const dbQuery: FindManyOptions<RecipeEntity> = { relations: [ 'ingredientAmount', 'ingredientAmount.ingredient' ] };
 
     dbQuery['where'] = {};
 
@@ -25,7 +25,8 @@ export class RecipeService {
   }
 
   public async findById(id: string): Promise<RecipeEntity> {
-    const searchResult = await this.repository.findOne(id, { relations: ['ingredientAmount', 'ingredientAmount.ingredient'] });
+    const searchResult = await this.repository
+    .findOne(id, { relations: [ 'ingredientAmount', 'ingredientAmount.ingredient' ] });
     if (searchResult === undefined) {
       throw new NotFoundException(`Recipe with ID ${id} cannot be found`);
     }
@@ -47,7 +48,7 @@ export class RecipeService {
   }
 
   public async update(id: string, recipe: RecipeCreateUpdateDto): Promise<RecipeEntity> {
-    const exisitngRecipe = await this.repository.findOne(id, { select: ['id'] });
+    const exisitngRecipe = await this.repository.findOne(id, { select: [ 'id' ] });
     if (exisitngRecipe === undefined) {
       throw new NotFoundException(`Recipe with ID ${id} cannot be found`);
     }

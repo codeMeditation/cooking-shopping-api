@@ -5,9 +5,9 @@ import { IngredientAmountEntity } from './ingredient-amount.entity';
 import { IngredientAmountService } from './ingredient-amount.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([IngredientAmountEntity])],
-  providers: [IngredientAmountService],
-  controllers: [IngredientAmountController],
-  exports: [IngredientAmountService],
+  imports: [ TypeOrmModule.forFeature([ IngredientAmountEntity ]) ],
+  providers: [ IngredientAmountService ],
+  controllers: [ IngredientAmountController ],
+  exports: [ IngredientAmountService ],
 })
 export class IngredientAmountModule { }

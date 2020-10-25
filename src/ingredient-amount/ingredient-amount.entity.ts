@@ -1,5 +1,5 @@
-import { IngredientEntity } from "../ingredient/ingredient.entity";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from "typeorm";
+import { IngredientEntity } from '../ingredient/ingredient.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
 
 @Entity({ name: 'ingredientAmount' })
 export class IngredientAmountEntity {
